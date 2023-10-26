@@ -42,18 +42,28 @@ def add_host(db):
     print("Existing users:")
     for i, user in enumerate(db['users'], 1):
         print(f"{i}. {user}")
-    user_indices = input(
-        "Enter user indices (comma separated, or 'n' to add new user): ")
-    if user_indices.lower() == 'n':
+    user_index = input(
+        "Enter user index (comma separated, or 'n' to add new user): ")
+    if user_index.lower() == 'n':
         new_user = input("Enter new user: ")
         db['users'].append(new_user)
         save_db(db)
         users = [new_user]
     else:
-        user_indices = map(int, user_indices.split(','))
-        users = [db['users'][index - 1] for index in user_indices]
-    key = input("Enter key: ")
-    db['hosts'][host] = {"name": host_name, "users": users, "key": key}
+        user_index = map(int, user_index.split(','))
+        users = [db['users'][index - 1] for index in user_index]
+
+    key_index = input(
+        "Enter credential key index (comma separated, or 'n' to add new credential key):")
+    if key_index.lower() == 'n':
+        new_key = input("Enter new key credential: ")
+        db['keys'].append(new_key)
+        save_db(db)
+        keys = [new_key]
+    else:
+        key_index = map(int, key_index.split(','))
+        keys = [db['keys'][index - 1] for index in key_index]
+    db['hosts'][host] = {"name": host_name, "users": users, "key": keys}
     save_db(db)
 
 
