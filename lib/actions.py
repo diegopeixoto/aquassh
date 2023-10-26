@@ -38,6 +38,7 @@ def initialize_db():
 
 def add_host(db):
     host = input("Enter host address: ")
+    host_name = input("Enter host name: ")
     print("Existing users:")
     for i, user in enumerate(db['users'], 1):
         print(f"{i}. {user}")
@@ -52,7 +53,7 @@ def add_host(db):
         user_indices = map(int, user_indices.split(','))
         users = [db['users'][index - 1] for index in user_indices]
     key = input("Enter key: ")
-    db['hosts'][host] = {"users": users, "key": key}
+    db['hosts'][host] = {"name": host_name, "users": users, "key": key}
     save_db(db)
 
 
